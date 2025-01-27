@@ -17,9 +17,10 @@ const Button = ({ handleClick, text }) => (
 
 // StatisticLine Component
 const StatisticLine = ({ text, value }) => (
-  <p>
-    {text}: {value}
-  </p>
+  <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 );
 
 // Statistics Component
@@ -33,14 +34,16 @@ const Statistics = ({ good, neutral, bad }) => {
   }
 
   return (
-    <div>
-      <StatisticLine text="Good" value={good} />
-      <StatisticLine text="Neutral" value={neutral} />
-      <StatisticLine text="Bad" value={bad} />
-      <StatisticLine text="Total" value={total} />
-      <StatisticLine text="Average" value={average.toFixed(2)} />
-      <StatisticLine text="Positive" value={`${positivePercentage.toFixed(2)}%`} />
-    </div>
+    <table style={{ margin: '0 auto', borderCollapse: 'collapse', width: '50%' }}>
+      <tbody>
+        <StatisticLine text="Good" value={good} />
+        <StatisticLine text="Neutral" value={neutral} />
+        <StatisticLine text="Bad" value={bad} />
+        <StatisticLine text="Total" value={total} />
+        <StatisticLine text="Average" value={average.toFixed(2)} />
+        <StatisticLine text="Positive" value={`${positivePercentage.toFixed(2)}%`} />
+      </tbody>
+    </table>
   );
 };
 

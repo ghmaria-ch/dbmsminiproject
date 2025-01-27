@@ -13,30 +13,68 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0)); // Initialize with zeros
 
-  // Function to select a random anecdote
+  // Select a random anecdote
   const handleNextAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
     setSelected(randomIndex);
   };
 
+  // Vote for the current anecdote
+  const handleVote = () => {
+    const copy = [...votes];
+    copy[selected] += 1; // Increment votes for the current anecdote
+    setVotes(copy);
+  };
+
+  // Find anecdote with the most votes
+  const mostVotesIndex = votes.indexOf(Math.max(...votes));
+  const mostVotedAnecdote = anecdotes[mostVotesIndex];
+
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h1>Random Anecdote</h1>
-      <p style={{ fontStyle: 'italic', marginBottom: '20px' }}>
+      <p style={{ fontStyle: 'italic', marginBottom: '10px' }}>
         "{anecdotes[selected]}"
       </p>
-      <button
-        onClick={handleNextAnecdote}
-        style={{
-          padding: '10px 20px',
-          fontSize: '1rem',
-          cursor: 'pointer',
-          borderRadius: '5px',
-        }}
-      >
-        Next Anecdote
-      </button>
+      <p>has {votes[selected]} votes</p>
+
+      <div>
+        <button
+          onClick={handleVote}
+          style={{
+            padding: '10px 20px',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            borderRadius: '5px',
+            marginRight: '10px',
+          }}
+        >
+          Vote
+        </button>
+        <button
+          onClick={handleNextAnecdote}
+          style={{
+            padding: '10px 20px',
+            fontSize: '1rem',
+            cursor: 'pointer',
+            borderRadius: '5px',
+          }}
+        >
+          Next Anecdote
+        </button>
+      </div>
+
+      <h2>Most Voted Anecdote</h2>
+      {votes[mostVotesIndex] > 0 ? (
+        <>
+          <p style={{ fontStyle: 'italic' }}>"{mostVotedAnecdote}"</p>
+          <p>with {votes[mostVotesIndex]} votes</p>
+        </>
+      ) : (
+        <p>No votes yet</p>
+      )}
     </div>
   );
 };

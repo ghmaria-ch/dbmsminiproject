@@ -15,13 +15,13 @@ const App = () => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0)); // Initialize with zeros
 
-  // Select a random anecdote
+  // Function to select a random anecdote
   const handleNextAnecdote = () => {
     const randomIndex = Math.floor(Math.random() * anecdotes.length);
     setSelected(randomIndex);
   };
 
-  // Vote for the current anecdote
+  // Function to vote for the current anecdote
   const handleVote = () => {
     const copy = [...votes];
     copy[selected] += 1; // Increment votes for the current anecdote
@@ -29,12 +29,12 @@ const App = () => {
   };
 
   // Find anecdote with the most votes
-  const mostVotesIndex = votes.indexOf(Math.max(...votes));
-  const mostVotedAnecdote = anecdotes[mostVotesIndex];
+  const maxVotes = Math.max(...votes);
+  const mostVotesIndex = votes.indexOf(maxVotes);
 
   return (
     <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Random Anecdote</h1>
+      <h1>Anecdote of the Day</h1>
       <p style={{ fontStyle: 'italic', marginBottom: '10px' }}>
         "{anecdotes[selected]}"
       </p>
@@ -66,11 +66,11 @@ const App = () => {
         </button>
       </div>
 
-      <h2>Most Voted Anecdote</h2>
-      {votes[mostVotesIndex] > 0 ? (
+      <h2>Anecdote with Most Votes</h2>
+      {maxVotes > 0 ? (
         <>
-          <p style={{ fontStyle: 'italic' }}>"{mostVotedAnecdote}"</p>
-          <p>with {votes[mostVotesIndex]} votes</p>
+          <p style={{ fontStyle: 'italic' }}>"{anecdotes[mostVotesIndex]}"</p>
+          <p>has {maxVotes} votes</p>
         </>
       ) : (
         <p>No votes yet</p>
